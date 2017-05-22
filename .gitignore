@@ -1,0 +1,4 @@
+*.pyc
+.venv/
+.eggs/
+pdf_comparer.egg-info/

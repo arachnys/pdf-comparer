@@ -1,0 +1,37 @@
+### PDF-COMPARER
+
+PDF-COMPARER is a python utility to compare pdfs, based on ghostscript and pillow.
+
+### USAGE
+
+PDF-COMPARER can be run from the command line:
+
+```
+./compare-pdf <path_to_pdf> <path_to_another_pdf> --rms-threshold=<threshold> --diffs-destination=<destination_folder>
+```
+
+The following options are supported:
+
+- `--rms-threshold`: How sensitive the comparison tool should be to mark a pair of pages as being dissimilar. The default value is 10.
+- `--diffs-destination`: The path of the folder where diffs should be saved. The default value is `None` (i.e. the diffs won't be saved.)
+
+PDF-COMPARER can also be used programatically:
+
+
+    from comparer import PdfComparer
+
+    comparer = PdfComparer(
+      <path_to_pdf>,
+      <path_to_another_pdf>,
+      max_rms_error=<threshold>,
+      diff_images_destination=<destination_folder>
+    )
+
+    is_similar, reasons = comparer.compare()
+
+
+### RUNNING THE TESTS
+
+```
+python setup.py test
+```
