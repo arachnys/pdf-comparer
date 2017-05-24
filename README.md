@@ -2,6 +2,12 @@
 
 PDF-COMPARER is a python utility to compare pdfs, based on ghostscript and pillow.
 
+### INSTALLATION
+
+This package depends on ghostscript, so this must be installed on your system before you can use PDF-COMPARER.
+
+Once this is done, installing the package is as easy as: `pip install .`
+
 ### USAGE
 
 PDF-COMPARER can be run from the command line:
@@ -33,5 +39,6 @@ PDF-COMPARER can also be used programatically:
 ### RUNNING THE TESTS
 
 ```
-python setup.py test
+docker build -t pdf-comparer .
+docker run pdf-comparer
 ```
