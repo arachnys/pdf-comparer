@@ -5,12 +5,13 @@ from converter import PdfToPngConverter
 
 
 class PdfComparer(object):
-  def __init__(self,
-               path_to_baseline,
-               path_to_comparee,
-               max_rms_error,
-               diff_images_destination=None,
-               ):
+  def __init__(
+      self,
+      path_to_baseline,
+      path_to_comparee,
+      max_rms_error,
+      diff_images_destination=None,
+  ):
     self.path_to_baseline = path_to_baseline
     self.path_to_comparee = path_to_comparee
 

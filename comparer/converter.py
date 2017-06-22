@@ -10,18 +10,11 @@ class PdfToPngConverter(object):
 
   def _page_name_template(self):
     return u"{temp_dir}/{filename}_%03d.png".format(
-      temp_dir=self.temp_dir.path,
-      filename=Path.filename(self.path))
+        temp_dir=self.temp_dir.path, filename=Path.filename(self.path)
+    )
 
   def _convert(self):
-    args = [
-      'gs',
-      '-sDEVICE=pngalpha',
-      '-o',
-      self._page_name_template(),
-      '-r300',
-      self.path
-    ]
+    args = ['gs', '-sDEVICE=pngalpha', '-o', self._page_name_template(), '-r300', self.path]
 
     subprocess.check_output(args)
 

@@ -8,8 +8,8 @@ def build_comparer(baseline_paths, comparee_paths, max_rms_error):
 
   image_pairs = itertools.izip(baseline_paths, comparee_paths)
   image_comparisons = [
-    ImageComparison(baseline_path, comparee_path, max_rms_error)
-    for baseline_path, comparee_path in image_pairs
+      ImageComparison(baseline_path, comparee_path, max_rms_error)
+      for baseline_path, comparee_path in image_pairs
   ]
 
   return ComparisonRunner([length_comparison] + image_comparisons)
@@ -39,7 +39,7 @@ class LengthComparison(Comparison):
     are_lengths_equal = len(self.baseline_paths) == len(self.comparee_paths)
 
     if not are_lengths_equal:
-        self.reason.append('LENGTH_NOT_EQUAL')
+      self.reason.append('LENGTH_NOT_EQUAL')
 
     return are_lengths_equal
 
@@ -54,16 +54,13 @@ class ImageComparison(Comparison):
     self.max_rms_error = max_rms_error
 
   def _squares_for_channel(self, channel_values):
-    return [frequency * (colour_value ** 2) for colour_value, frequency in enumerate(channel_values)]
+    return [frequency * (colour_value**2) for colour_value, frequency in enumerate(channel_values)]
 
   def _calculate_rms(self):
     baseline_img = Image.open(self.baseline)
     comparee_img = Image.open(self.comparee)
 
-    diff = ImageChops.difference(
-      baseline_img,
-      comparee_img
-    )
+    diff = ImageChops.difference(baseline_img, comparee_img)
 
     histogram = diff.histogram()
 
@@ -73,16 +70,11 @@ class ImageComparison(Comparison):
     alpha_channel_squares = self._squares_for_channel(histogram[768:])
 
     sum_of_squares = sum(
-      red_channel_squares
-      + green_channel_squares
-      + blue_channel_squares
-      + alpha_channel_squares
+        red_channel_squares + green_channel_squares + blue_channel_squares + alpha_channel_squares
     )
 
     baseline_x, baseline_y = baseline_img.size
-    root_mean_square_error = math.sqrt(
-      sum_of_squares / float(baseline_x * baseline_y)
-    )
+    root_mean_square_error = math.sqrt(sum_of_squares / float(baseline_x * baseline_y))
 
     return root_mean_square_error
 
@@ -91,7 +83,7 @@ class ImageComparison(Comparison):
     rms_error = self._calculate_rms()
 
     if rms_error > self.max_rms_error:
-      self.reason.append("RMSE_EXCEEDED")
+      self.reason.append('RMSE_EXCEEDED')
       return False
     return True
 
@@ -104,8 +96,8 @@ class ComparisonRunner(object):
     result = all([comparison.run() for comparison in self.comparisons])
 
     reasons = reduce(
-      lambda reason, agg: agg + reason,
-      [comparison.get_reason() for comparison in self.comparisons]
+        lambda reason, agg: agg + reason,
+        [comparison.get_reason() for comparison in self.comparisons]
     )
 
     return result, reasons

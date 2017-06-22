@@ -13,9 +13,7 @@ class TempDir(object):
 
   def list(self):
     filepaths = sorted(os.listdir(self._path))
-    absolute_filepaths = [
-      os.path.join(self._path, filepath) for filepath in filepaths
-    ]
+    absolute_filepaths = [os.path.join(self._path, filepath) for filepath in filepaths]
     return absolute_filepaths
 
   def remove(self):

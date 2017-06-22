@@ -8,36 +8,35 @@ DEFAULT_RMS_THRESHOLD = 10
 
 @click.command()
 @click.option(
-  '--rms-threshold',
-  default=DEFAULT_RMS_THRESHOLD,
-  help='The RMS threshold used when comparing images.')
-@click.option(
-  '--diffs-destination',
-  default=None,
-  help='Where to save the diffs.')
+    '--rms-threshold',
+    default=DEFAULT_RMS_THRESHOLD,
+    help='The RMS threshold used when comparing images.'
+)
+@click.option('--diffs-destination', default=None, help='Where to save the diffs.')
 @click.argument('baseline_path')
 @click.argument('comparee_path')
 def main(rms_threshold, diffs_destination, baseline_path, comparee_path):
-    exit_code = 0
-    comparer = PdfComparer(
+  exit_code = 0
+  comparer = PdfComparer(
       baseline_path,
       comparee_path,
       max_rms_error=rms_threshold,
       diff_images_destination=diffs_destination
-    )
-    is_similar, reasons = comparer.compare()
+  )
+  is_similar, reasons = comparer.compare()
 
-    click.echo('COMPARISON RESULT: {}'.format(is_similar))
+  click.echo('COMPARISON RESULT: {}'.format(is_similar))
 
-    if not is_similar:
-      exit_code = 1
-      click.echo('---------------------')
-      click.echo('REASONS:\n')
+  if not is_similar:
+    exit_code = 1
+    click.echo('---------------------')
+    click.echo('REASONS:\n')
 
-      for reason in reasons:
-        click.echo(reason)
+    for reason in reasons:
+      click.echo(reason)
 
-    sys.exit(exit_code)
+  sys.exit(exit_code)
+
 
 if __name__ == "__main__":
   main()
